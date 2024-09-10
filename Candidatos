@@ -1,0 +1,332 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+
+using namespace std;
+
+double puntuacion(char, int, char, char);
+
+void vistaso(double promAS, double ToTAS, int contAS, double MP, double mP, /*char NM, char NP,*/ double promE, double ToTE, int contA);
+
+int main(){
+	
+	int N, edad, AEx /*anios de experiencia*/, contAS = 0, contA=0;
+	
+	char nombre[10], ced[10], nac/*Nacionalidad*/, titulo, DI/*Dominio del ingles*/, NM[10], NP[10];
+	
+	double AS = 0/*Aspiracion salarial*/, P = 0, promAS = 0, ToTAS=0, MP=0, mP=0, promE=0, ToTE=0;
+	
+	cout<<"Ingrese el numero de candidatos del dia: ";
+	
+	cin>>N;
+	
+	for(int i=0; i<N; i++){
+		
+		cout<<"Candidato numero "<<i+1<<endl;
+		
+		cout<<"Ingrese el nombre del candidato: ";
+		
+		cin>>nombre;
+		
+		cout<<"Ingrese la edad: ";
+		
+		cin>>edad;
+		
+		cout<<"Ingrese su cedula: ";
+		
+		cin>>ced;
+		
+		cout<<"Ingrese si es [V]enezolano p [E]xtranjero: ";
+		
+		cin>>nac;
+		
+		while((nac != 'V' && nac != 'v') && (nac != 'E' && nac != 'e')){
+			
+			cout<<"Ingrese nuevamente y de FORMA correcta su Nacionalidad\n";
+			
+			cout<<"Ingrese si es [V]enezolano p [E]xtranjero: ";
+		
+			cin>>nac;
+			
+		}
+		
+		cout<<"Ingrese uno de estos titulos\n";
+		
+		cout<<"[B]achiller\n[T]ecnico\n[I]ngeniero\n[P]ostgrado\n";
+		
+		cin>>titulo;
+		
+		while((titulo != 'B' && titulo != 'b') && (titulo != 'T' && titulo != 't') && (titulo != 'I' && titulo != 'i') && (titulo != 'P' && titulo != 'p')){
+			
+			cout<<"Ingrese nuevamente y de FORMA correcta el titulo\n";
+			
+			cout<<"[B]achiller\n[T]ecnico\n[I]ngeniero\n[P]ostgrado\n";
+		
+			cin>>titulo;
+		}
+		
+		cout<<"Ingrese los anios de experiencia: ";
+		
+		cin>>AEx;
+		
+		while(AEx <= 0){
+			
+			cout<<"No recibimos recien nacidos. Ingrese nuevamente los anios de experiencia\n";
+			
+			cout<<"Ingrese los anios de experiencia: ";
+		
+			cin>>AEx;
+			
+		}
+		
+		cout<<"Ingrese el dominio del ingles\n";
+		
+		cout<<"[B]asico\n[I]ntermedio\n[A]vanzado\n";
+		
+		cin>>DI;
+		
+		while((DI != 'B' && DI != 'b') && (DI != 'I' && DI != 'i') && (DI != 'A' && DI != 'a')){
+			
+			cout<<"Ingrese nuevamente y de FORMA correcta el su dominio del ingles\n";
+			
+			cout<<"[B]asico\n[I]ntermedio\n[A]vanzado\n";
+		
+			cin>>DI;
+		}
+		
+		cout<<"Ingrese la aspiracion salarial del aspirante: ";
+		
+		cin>>AS;
+		
+		ToTAS += AS;
+		
+		contAS++;
+		
+		P = puntuacion(titulo, AEx, DI, nac);
+		
+		cout<<"El puntuaje del aspirante es de: "<< P;
+		
+		system("pause");
+		
+		system("CLS");
+		
+		if(P > MP){
+			
+			MP = P;
+			
+			strcpy(NM, nombre);
+			
+		}else if(P < MP){
+			
+			mP = P;
+			
+			strcpy(NP, nombre);
+		}
+		
+		if(DI == 'A' || DI == 'a'){
+			
+			contA++;
+			
+			ToTE += edad;
+			
+		}
+		
+	}
+	
+	vistaso(promAS, ToTAS, contAS, MP, mP, /*NM, NP,*/ promE, ToTE, contA);
+	
+	return 0;
+}
+
+
+//VISTASO DE LOS RESULTADOS
+
+void vistaso(double promAS, double ToTAS, int contAS, double MP, double mP, /*char NM, char NP,*/ double promE, double ToTE, int contA){
+	
+	promAS = ToTAS / contAS;
+	
+	cout<<"El promedo de la aspiracion salarial de los ingenieros es de: "<<promAS;
+	
+	cout<<"El mejor puntuaje con: "<< MP;
+	
+	cout<<"El peor puntuaje con: " << mP;
+	
+	if(ToTE == 0)
+	
+	promE = 0;
+	
+	else
+	
+	promE = ToTE / contA;
+	
+	cout<<"El promedio de edades que saben hablar ingles en Avanzado es: "<<promE;
+	
+}
+
+
+//PUNTUAJE DEL ASPIRANTE
+
+double puntuacion(char titulo, int AEx, char DI, char nac){
+	
+	double Punt, E;
+	
+	if(titulo == 'B' || titulo == 'b'){
+		
+		Punt = 1.5;
+		
+		if(AEx>0 || AEx <=3)
+		
+		Punt += 0.75;
+		
+		else if(AEx>=4 || AEx <=5)
+		
+		Punt += 1;
+		
+		else
+		
+		Punt +=1.2;
+		
+		if(DI == 'B' || DI == 'b')
+		
+		Punt += 0.3;
+		
+		else if(DI == 'I' || DI == 'i')
+		
+		Punt += 0.5;
+		
+		else
+		
+		Punt += 0.8;
+		
+		if(nac == 'E'){
+		
+		E = Punt * 0.05;
+		
+		Punt -= E;
+		
+		}
+		
+		return Punt;
+		
+		
+	}else if(titulo == 'T' || titulo == 't'){
+		
+		Punt = 2;
+		
+		if(AEx>0 || AEx <=3)
+		
+		Punt += 0.75;
+		
+		else if(AEx>=4 || AEx <=5)
+		
+		Punt += 1;
+		
+		else
+		
+		Punt +=1.2;
+		
+		if(DI == 'B' || DI == 'b')
+		
+		Punt += 0.3;
+		
+		else if(DI == 'I' || DI == 'i')
+		
+		Punt += 0.5;
+		
+		else
+		
+		Punt += 0.8;
+		
+		if(nac == 'E' || nac == 'e'){
+		
+		E = Punt * 0.05;
+		
+		Punt -= E;
+		
+		}
+		
+		return Punt;
+		
+		
+	}else if(titulo == 'I' || titulo == 'i'){
+		
+		Punt = 2.5;
+		
+		if(AEx>0 || AEx <=3)
+		
+		Punt += 0.75;
+		
+		else if(AEx>=4 || AEx <=5)
+		
+		Punt += 1;
+		
+		else
+		
+		Punt +=1.2;
+		
+		if(DI == 'B' || DI == 'b')
+		
+		Punt += 0.3;
+		
+		else if(DI == 'I' || DI == 'i')
+		
+		Punt += 0.5;
+		
+		else
+		
+		Punt += 0.8;
+		
+		if(nac == 'E' || nac == 'e'){
+		
+		E = Punt * 0.05;
+		
+		Punt -= E;
+		
+		}
+		
+		
+		return Punt;
+		
+		
+	}else if(titulo == 'P' || titulo == 'p'){
+		
+		Punt = 3;
+		
+		if(AEx>0 || AEx <=3)
+		
+		Punt += 0.75;
+		
+		else if(AEx>=4 || AEx <=5)
+		
+		Punt += 1;
+		
+		else
+		
+		Punt +=1.2;
+		
+		if(DI == 'B' || DI == 'b')
+		
+		Punt += 0.3;
+		
+		else if(DI == 'I' || DI == 'i')
+		
+		Punt += 0.5;
+		
+		else
+		
+		Punt += 0.8;
+		
+		if(nac == 'E' || nac == 'e'){
+		
+		E = Punt * 0.05;
+		
+		Punt -= E;
+		
+		}
+		
+		return Punt;
+		
+		
+	}
+}
